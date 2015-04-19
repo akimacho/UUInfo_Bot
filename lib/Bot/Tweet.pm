@@ -6,13 +6,13 @@ use Encode qw/encode_utf8/;
 use Config::Tiny;
 use FindBin;
 use Carp;
-use Net::Twitter::Lite::WithAPIv1_1;
+use base qw/Net::Twitter::Lite::WithAPIv1_1/;
 use Scalar::Util qw/blessed/;
 
 sub new {
 	my $class = shift;
-	my $config = Config::Tiny->read("twitter.conf");
-	my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
+	my $config = Config::Tiny->read("$FindBin::Bin/twitter.config", 'utf8');
+	my $nt = $class->SUPER::new(
 		consumer_key => $config->{twitter}->{consumer_key},
 		consumer_secret => $config->{twitter}->{consumer_secret},
 		access_token => $config->{twitter}->{access_token},
