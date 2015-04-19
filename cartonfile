@@ -1,0 +1,6 @@
+requires 'Time::Piece', '>= 1.29';
+requires 'POSIX', '>= 1.38_03';
+
+on 'test' => sub {
+  requires 'Test::More', '>= 1.001014';
+}
