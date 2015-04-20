@@ -5,7 +5,7 @@ use utf8;
 use Carp qw/croak/;
 use URI;
 use LWP::UserAgent;
-use JSON;
+use JSON qw/decode_json/;
 
 sub new {
 	my ($class) = @_;
@@ -18,9 +18,13 @@ sub new {
 	my $forecasts = {
 		today => {
 			whether => $content->{forecasts}->[0]->{telop},
+			max => $content->{forecasts}->[0]->{temperature}->{max}->{celsius},
+			min => $content->{forecasts}->[0]->{temperature}->{min}->{celsius},
 		},
 		tomorrow => {
 			whether => $content->{forecasts}->[1]->{telop},
+			max => $content->{forecasts}->[1]->{temperature}->{max}->{celsius},
+			min => $content->{forecasts}->[1]->{temperature}->{min}->{celsius},
 		},
 	};
 	return bless $forecasts, $class;
