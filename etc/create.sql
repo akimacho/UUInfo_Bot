@@ -1,9 +1,12 @@
-CREATE TABLE Events (
+CREATE TABLE Deadline (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_name TEXT NOT NULL,
+  screen_name TEXT NOT NULL,
 	user_id TEXT NOT NULL,
-	event_title TEXT NOT NULL,
+  event_title TEXT NOT NULL,
+	event_sense TEXT NOT NULL,
 	event_date TEXT NOT NULL,
-	description TEXT NOT NULL,
-	registration_date TEXT NOT NULL
+	event_description TEXT,
+	good INTEGER NOT NULL,
+	bad INTEGER NOT NULL,
+  registration_date NUMERIC NOT NULL
 );

@@ -19,19 +19,27 @@ my $deadline = Bot::Deadline->new;
 my $db = Bot::DB->new({
 	dsn => 'dbi:SQLite:dbname=events.db',
 });
+my $tweetor = Bot::Tweet->new;
 my $itr = $db->search('Deadline', {});
 
-print $itr->count, "\n";
-print $scheduler->getInterval($itr->count), "\n";
-print $message->goodmorning(today => $forecast->today_forecast,);
+my $interval = $scheduler->getInterval($itr->count);
+my $gd_msg = $message->goodmorning(today => $forecast->today_forecast,);
+print $gd_msg, "\n";
+# $tweetor->tweet($gd_msg);
 while (my $row = $itr->next) {
+	my $leftdays = $deadline->leftdays($row->event_date);
+	next if ($leftdays < 0);
 	my $msg = $message->getTweetMassage(
 		id			 => $row->id,
 		title		 => decode_utf8($row->event_title),
 		date		 => $row->event_date,
 		sense		 => $row->event_sense,
-		leftdays => $deadline->leftdays($row->event_date),
+		leftdays => $leftdays,
 	);
-	print $msg, "\n\n";
+	print $msg, "\n";
+	# $tweetor->tweet($msg);
+	#sleep($interval)
 }
-print $message->goodevening(tomorrow => $forecast->tomorrow_forecast,);
+my $ge_msg = $message->goodevening(tomorrow => $forecast->tomorrow_forecast,);
+print $ge_msg, "\n";
+# $tweetor->tweet($ge_msg);

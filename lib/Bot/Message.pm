@@ -12,7 +12,7 @@ sub new {
 
 sub getTweetMassage {
 	my ($self, %args) = @_;
-	my $msg = $args{title} . "は" . $args{date} . "です\n";
+	my $msg = $args{title} . "は" . $self->_getJPNDate($args{date}) . "です\n";
 	$msg .= 'あと' . $args{leftdays} . "日です\n" if ($args{sense} eq 'countdown');
 	$msg .= 'http://utsu-info.com/entry/' . $args{id};
 	return encode_utf8($msg);
@@ -23,7 +23,7 @@ sub goodmorning {
 	my $t = localtime;
 	my $msg = 'おはようございます！';
 	$msg .= $t->mon . '月' . $t->mday . '日' . '(' . $t->wdayname(qw/日 月 火 水 木 金 土/) . ")をお知らせします\n";
-	$msg .= "今日の天気は" . $args{today}->{whether} . "です。また";
+	$msg .= "今日の天気は" . $args{today}->{whether} . " ";
 	$msg .= "予想最高気温は" . $args{today}->{max} . "度 " if ($args{today}->{max});
 	$msg .= "予想最低気温は" . $args{today}->{min} . "度 " if ($args{today}->{min});
 	$msg .= "です http://weather.livedoor.com/area/forecast/0920100";
@@ -39,6 +39,14 @@ sub goodevening {
 	$msg .= "です http://weather.livedoor.com/area/forecast/0920100\n";
 	$msg .= "お疲れ様でしたー";
 	return encode_utf8($msg);
+}
+
+sub _getJPNDate {
+	my ($self, $date) = @_;
+	my ($year, $month, $day) = split(/-/, $date);
+	my $jpn_date = localtime->strptime($year . '-' . $month . '-' . $day, '%Y-%m-%d');
+	my $wday = $jpn_date->wdayname(qw/日 月 火 水 木 金 土/);
+	return $year . "年" . $month . "月" . $day . "日" . "(" . $wday . ")";
 }
 
 1;
