@@ -2,7 +2,6 @@ package Bot::Message;
 use strict;
 use warnings;
 use utf8;
-use Encode qw/encode_utf8/;
 use Time::Piece;
 
 sub new {
@@ -15,7 +14,7 @@ sub getTweetMassage {
 	my $msg = $args{title} . "は" . $self->_getJPNDate($args{date}) . "です\n";
 	$msg .= 'あと' . $args{leftdays} . "日です\n" if ($args{sense} eq 'countdown');
 	$msg .= 'http://utsu-info.com/entry/' . $args{id};
-	return encode_utf8($msg);
+	return $msg;
 }
 
 sub goodmorning {
@@ -27,7 +26,7 @@ sub goodmorning {
 	$msg .= "予想最高気温は" . $args{today}->{max} . "度 " if ($args{today}->{max});
 	$msg .= "予想最低気温は" . $args{today}->{min} . "度 " if ($args{today}->{min});
 	$msg .= "です http://weather.livedoor.com/area/forecast/0920100";
-	return encode_utf8($msg);
+	return $msg;
 }
 
 sub goodevening {
@@ -38,7 +37,7 @@ sub goodevening {
 	$msg .= "予想最低気温は" . $args{tomorrow}->{min} . "度 " if ($args{tomorrow}->{min});
 	$msg .= "です http://weather.livedoor.com/area/forecast/0920100\n";
 	$msg .= "お疲れ様でしたー";
-	return encode_utf8($msg);
+	return $msg;
 }
 
 sub _getJPNDate {

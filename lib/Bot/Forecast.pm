@@ -1,7 +1,6 @@
 package Bot::Forecast;
 use strict;
 use warnings;
-use utf8;
 use Carp qw/croak/;
 use URI;
 use LWP::UserAgent;

@@ -1,5 +1,4 @@
 package Bot::Scheduler;
-
 use strict;
 use warnings;
 use Time::Piece;

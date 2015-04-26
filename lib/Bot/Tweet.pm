@@ -1,11 +1,9 @@
 package Bot::Tweet;
 use strict;
 use warnings;
-use utf8;
-use Encode qw/encode_utf8/;
 use Config::Tiny;
 use FindBin;
-use Carp;
+use Carp qw/croak carp/;
 use base qw/Net::Twitter::Lite::WithAPIv1_1/;
 use Scalar::Util qw/blessed/;
 
