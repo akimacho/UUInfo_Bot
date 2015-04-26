@@ -32,12 +32,12 @@ sub new {
 
 sub today_forecast {
 	my $self = shift;
-	return $self->{today}->{whether};
+	return $self->{today};
 }
 
 sub tomorrow_forecast {
 	my $self = shift;
-	return $self->{tomorrow}->{whether};
+	return $self->{tomorrow};
 }
 
 1;
